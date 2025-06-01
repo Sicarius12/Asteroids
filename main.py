@@ -37,10 +37,17 @@ def main():
         screen.fill("black")
         updatable.update(dt)
 
+        if player.cooldown > 0:
+            player.cooldown -= dt
+
         for asteroid in asteroids:
             if asteroid.collision(player):
                 print("Game over!")
                 running = False
+            for shot in shots:
+                if asteroid.collision(shot):
+                    asteroid.kill()
+                    shot.kill()
 
         for drawing in drawable:
             drawing.draw(screen)
